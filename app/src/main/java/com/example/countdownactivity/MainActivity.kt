@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
         // Hedef tarihi ayarla (örneğin, 31 Aralık 2024)
         val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        val targetDate = "31-12-2024" // Hedef tarih
+        val targetDate = "28-03-2024" // Hedef tarih
         try {
             val date: Date = sdf.parse(targetDate)!!
             val targetTimeInMillis: Long = date.time
