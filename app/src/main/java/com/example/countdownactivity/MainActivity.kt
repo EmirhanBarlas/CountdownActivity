@@ -1,5 +1,10 @@
-package com.example.countdownactivity
+package com.example.countdownactivity;
 
+import android.app.Notification
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.TextView
@@ -7,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import android.view.Window;
+import android.view.WindowManager;
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,14 +22,16 @@ class MainActivity : AppCompatActivity() {
     private var timeLeftInMillis: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_countdown)
 
         countdownText = findViewById(R.id.countdown_text)
 
-        // Hedef tarihi ayarla (örneğin, 31 Aralık 2024)
+        //Set target date (for example, March 28, 2024)
         val sdf = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-        val targetDate = "28-03-2024" // Hedef tarih
+        val targetDate = "28-03-2024" // Target date
         try {
             val date: Date = sdf.parse(targetDate)!!
             val targetTimeInMillis: Long = date.time
@@ -61,6 +70,26 @@ class MainActivity : AppCompatActivity() {
             days, hours, minutes, seconds
         )
         countdownText.text = timeLeftFormatted
+
+        // You can change the notification sending section every 6 hours.
+        if (timeLeftInMillis > 0 && timeLeftInMillis % TimeUnit.HOURS.toMillis(6) == 0L) {
+            sendNotification("Doğum gününe kalan süre: $timeLeftFormatted")
+        }
+    }
+
+    private fun sendNotification(message: String) {
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val intent = Intent(this, MainActivity::class.java)
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val notification = Notification.Builder(this)
+            .setContentTitle("Doğum Günü Bildirimi")
+            .setContentText(message)
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setContentIntent(pendingIntent)
+            .build()
+
+        notificationManager.notify(1, notification)
     }
 
     override fun onDestroy() {

@@ -1,13 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center_vertical">
+    <TextView
+        android:id="@+id/birthday_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="-250dp"
+        android:layout_centerHorizontal="true"
+        android:text="Emirhan Barlas'ın 17. yaş günü"
+        android:textSize="24sp"/>
+
+    <TextView
+        android:id="@+id/birthday_countdown_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:text="Doğum Gününe Kalan Süre:" />
 
     <TextView
         android:id="@+id/countdown_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:layout_centerInParent="true"
-        android:text="Countdown" />
+        android:textSize="24sp"
+        android:layout_below="@id/birthday_countdown_text"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:text="Gün Saat Dakika Saniye" />
+
 </RelativeLayout>
